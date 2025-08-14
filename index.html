@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tỏ Tình</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+      body {
+        font-family: "Pacifico", cursive;
+        text-align: center;
+        background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+        height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      h1 {
+        color: #ff3366;
+        font-size: 2rem;
+        margin-top: 40px;
+        line-height: 1.5;
+      }
+      p#message {
+        color: #ff3366;
+        font-size: 1.2rem;
+        margin-top: 10px;
+        min-height: 24px;
+      }
+      .btn-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      button {
+        font-size: 1.2rem;
+        padding: 15px 30px;
+        margin: 10px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        min-width: 120px;
+      }
+      #yesBtn {
+        background-color: #ff6699;
+        color: white;
+      }
+      #noBtn {
+        background-color: #999;
+        color: white;
+      }
+      #thankYou {
+        display: none;
+        font-size: 1.5rem;
+        color: #ff3366;
+        margin-top: 100px;
+        animation: pop 1s ease;
+        line-height: 1.5;
+      }
+      @keyframes pop {
+        0% {
+          transform: scale(0.5);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .heart {
+        position: absolute;
+        color: red;
+        animation: fly 4s linear forwards;
+        z-index: 999;
+      }
+      @keyframes fly {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-800px) scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      /* Tối ưu cho điện thoại */
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 1.4rem;
+          margin-top: 20px;
+        }
+        button {
+          font-size: 1rem;
+          padding: 12px 20px;
+          min-width: 100px;
+        }
+        #thankYou {
+          font-size: 1.2rem;
+          margin-top: 60px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>
+      Anh biết hiện tại anh chưa có gì nhiều, vẫn là một sinh viên đang cố gắng
+      từng ngày. Nhưng chính vì thế, anh càng trân trọng em hơn. Anh không thể
+      hứa ngay lập tức cho em một cuộc sống đủ đầy, nhưng anh hứa sẽ nỗ lực hết
+      mình để mang lại hạnh phúc cho em. Em có đồng ý để anh được ở bên và yêu
+      em không? 💖
+    </h1>
+    <p id="message"></p>
+    <div class="btn-container">
+      <button id="yesBtn">Có</button>
+      <button id="noBtn">Không</button>
+    </div>
+
+    <div id="thankYou">
+      ❤️ Cảm ơn em… từ giờ anh sẽ cố gắng mỗi ngày để xứng đáng với em. ❤️
+    </div>
+
+    <script>
+      let noClickCount = 0;
+      const noBtn = document.getElementById("noBtn");
+      const yesBtn = document.getElementById("yesBtn");
+      const thankYou = document.getElementById("thankYou");
+      const message = document.getElementById("message");
+
+      noBtn.addEventListener("click", function () {
+        noClickCount++;
+        noBtn.style.transform = `scale(${1 + noClickCount * 0.2}) rotate(${
+          noClickCount * 5
+        }deg)`;
+
+        if (noClickCount < 5) {
+          message.textContent = "Đừng ấn Không chứ, hãy ấn Có đi!";
+        }
+        if (noClickCount >= 5) {
+          message.textContent = "Em không còn cơ hội từ chối đâu!";
+          noBtn.textContent = "Có";
+          noBtn.id = "yesBtn2";
+          noBtn.style.backgroundColor = "#ff6699";
+          noBtn.style.color = "white";
+          noBtn.style.transform = "scale(1)";
+          noBtn.addEventListener("click", showThankYou);
+        }
+      });
+
+      yesBtn.addEventListener("click", showThankYou);
+
+      function showThankYou() {
+        document.querySelector("h1").style.display = "none";
+        message.style.display = "none";
+        yesBtn.style.display = "none";
+        noBtn.style.display = "none";
+        thankYou.style.display = "block";
+        createHearts();
+      }
+
+      // Tạo hiệu ứng trái tim bay
+      function createHearts() {
+        for (let i = 0; i < 30; i++) {
+          const heart = document.createElement("div");
+          heart.classList.add("heart");
+          heart.innerHTML = "&#10084;";
+          heart.style.left = Math.random() * window.innerWidth + "px";
+          heart.style.fontSize = 20 + Math.random() * 30 + "px";
+          document.body.appendChild(heart);
+
+          setTimeout(() => {
+            heart.remove();
+          }, 4000);
+        }
+      }
+    </script>
+  </body>
+</html>
